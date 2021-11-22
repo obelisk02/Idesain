@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Auto</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+    <link rel="stylesheet" href="navbar.css">
+  
+</head>
+<body>
+    <div id="nav-placeholder">
+
+    </div>
+    <head><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css"></head>
+    <br />
+    <div class="inner contact">
+                    <!-- Form Area -->
+                    <div class="contact-form">
+                        <!-- Form -->
+                        <form id="contact-us" method="post" action="#">
+                            <!-- Left Inputs -->
+                            <div class="col-xs-6 wow animated slideInLeft" data-wow-delay=".5s">
+                                <!-- Name -->
+                                <input type="text" name="name" id="name" required="required" class="form" placeholder="Name" />
+                                <!-- Email -->
+                                <input type="email" name="mail" id="mail" required="required" class="form" placeholder="Email" />
+                                <!-- Subject -->
+                                <input type="text" name="subject" id="subject" required="required" class="form" placeholder="Subject" />
+                            </div><!-- End Left Inputs -->
+                            <!-- Right Inputs -->
+                            <div class="col-xs-6 wow animated slideInRight" data-wow-delay=".5s">
+                                <!-- Message -->
+                                <textarea name="message" id="message" class="form textarea"  placeholder="Message"></textarea>
+                            </div><!-- End Right Inputs -->
+                            <!-- Bottom Submit -->
+                            <div class="relative fullwidth col-xs-12">
+                                <!-- Send Button -->
+                                <button type="submit" id="submit" name="submit" class="form-btn semibold">Send Message</button> 
+                            </div><!-- End Bottom Submit -->
+                            <!-- Clear -->
+                            <div class="clear"></div>
+                        </form>
+    
+                        <!-- Your Mail Message -->
+                        <div class="mail-message-area">
+                            <!-- Message -->
+                            <div class="alert gray-bg mail-message not-visible-message">
+                                <strong> .</strong> 
+                            </div>
+                        </div>
+    
+                    </div><!-- End Contact Form Area -->
+                </div><!-- End Inner -->
+
+
+    
+</body>
+
+<!--<script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-firestore.js"></script> -->
+
+<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
+<script src=""></script>
+
+<script>
+    $(function(){
+      $("#nav-placeholder").load("nav-bar.html");
+    });
+    </script>
+</html>

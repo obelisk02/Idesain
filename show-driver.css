@@ -1,0 +1,30 @@
+.text-center {
+  text-align: center;
+}
+
+.color-white {
+  color: white;
+}
+
+.fcc-btn {
+  background-color: #198754;
+  color: white;
+  padding: 0.6rem 0.8rem;
+
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.fcc-btn:hover {
+  background-color: #157347;
+}
+
+a,
+a:hover {
+  color: white;
+  text-decoration: none;
+}
+
+.padd-div {
+  padding-top: 1px;
+}

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar conductor</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="form-driver.css">
+</head>
+<body>
+    <div id="nav-placeholder">
+
+    </div>
+     
+
+<div class="alert alert-success" id="success-alert">
+  <button type="button" class="close" data-dismiss="alert">x</button>
+  <strong>Exito! </strong> El concuctor se agrego correctamente
+</div>
+      
+
+    <div class="registration-form">
+    <form id="driver-form">
+        <div class="form-icon">
+            <span><i class="fas fa-user"></i></span>
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control item" id="name-driver" placeholder="Nombre" autofocus required>
+        </div>
+        <div class="form-group">
+            <select name="auto" id="auto-driver" class="form-control item" placeholder="Elige auto">
+               <!-- <option value=Vacio style="font-weight: bold"></option> -->
+            </select>
+        </div>
+
+        <div class="form-group">
+            <input type="nunmber" class="form-control item" id="phone-number" placeholder="Telefono">
+        </div>
+        
+        <div class="form-group">
+            <select name="hora" id="hora-driver" class="form-control item" placeholder="Turno">
+                <option value=Matutino style="font-weight: bold">Matutino</option>
+                <option value=Vespertino style="font-weight: bold">Vespertino</option>
+            
+            </select>
+        </div>
+
+        <div class="form-group">
+            <input type="number" class="form-control item" id="renta-auto" placeholder="Renta Semanal" required>
+        </div>
+
+
+        <!--<div class="form-group">
+            <select name="auto" id="auto-socio" class="form-control item" placeholder="Socio">
+                <option value=Vacio style="font-weight: bold"></option> 
+            </select>
+        </div> -->
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-block create-account" id="btn-driver-submit">Crear Conductor</button>
+        </div>
+    </form>
+    <div class="social-media">
+        <h5>Conductor</h5>
+        <div class="social-icons">
+          
+        </div>
+    </div>
+    </div>
+
+
+
+
+</body>
+
+<!--<script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-firestore.js"></script> -->
+
+<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
+<script src="post-driver.js"></script>
+
+<script>
+    $(function(){
+      $("#nav-placeholder").load("nav-bar.html");
+    });
+    </script>
+</html>

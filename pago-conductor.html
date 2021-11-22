@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pago conductor</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="show-driver.css">
+    <link rel="stylesheet" href="pago-conductor.css">
+</head>
+<body>
+    <div id="nav-placeholder">
+
+    </div>
+    <br>
+    <!--<button class="btn btn-sm btn-success w-50" type="button">
+       <i class="fab fa-whatsapp"></i></button> 
+    <a class="fcc-btn text-center" href="//api.whatsapp.com/send?phone=52${doc.data().telefono}"><i class="fab fa-whatsapp"></i></a>-->
+    <br>
+    
+    <div class="container table-responsive py-6"> 
+        <div class="d-inline-block  w-25"> 
+            <select name="auto" id="driver" class="form-select h-25 d-flex justify-content-around " placeholder="Elige conductor">
+                <!-- <option value=Vacio style="font-weight: bold"></option> --> 
+             </select> </div>
+ <div class="d-inline-block ">
+    <button id="btnBuscar" class="btn btn-primary" title="Buscar Producto" data-bs-toggle="modal" > <i class="fas fa-search"></i></button> 
+    <button id="btnActualizar" class="btn btn-warning white" title="Agrega un cobro" data-bs-toggle="modal" data-bs-target="#editarModal" ><i class="far fa-file-alt"></i> Servicios</button>    
+     
+    <button id="btnCrear" class="btn btn-danger white" title="Crea cobro semanal de cada usuario" data-bs-toggle="modal" data-bs-target="#generarModal" ><i class="fas fa-money-bill-wave"></i> Nueva Semana</button>       
+
+    <!-- <button id="btnCrear" class="btn btn-primary text-right" title="Agrega un cobro" data-bs-toggle="modal" data-bs-target="#editarModal" ><i class="fas fa-dollar-sign"></i> Monto Generado</button>  --> 
+ 
+  </div>
+       
+    <br>
+         <br>
+         <div class="table-responsive">
+          <table class="table table-light table-hover ">
+              <thead class="table-secondary">
+                  <tr>
+                      <th scope="col">Fecha #</th>
+                      <th scope="col" class="text-center">Monto Generado</th>
+                      <th scope="col" class="text-center">Descuentos</th>
+                      <th scope="col" class="text-center">Varios</th>
+                      <th scope="col" class="text-center">Monto a Pagar</th>
+                      <th scope="col" class="text-center">Status</th>
+                      <th scope="col" class="text-center">Pagado</th>
+                      <th scope="col" class="text-center">Debe</th>
+                      <th scope="col" class="text-center">Pago</th>
+                      <th scope="col" class="text-center">Acciones</th>
+
+                  </tr>
+              </thead>
+              <tbody id="tabla-pagos">
+                  <tr>
+                      <td>348</td>
+                      <td><a href="#">Joel</a></td>
+                      <td>joel@gmail.com</td>
+                      <td>Lorem Ipsum Lorem Ipsum Lorem Ipsum</td>
+                      <td class="text-center"><span class="badge bg-primary">Primary</span></td>
+                      <td class="text-center">Anand Ramakrishna</td>
+                      <td class="text-center">18-11-2018</td>
+                      <td class="text-center"><span class="sr-only">Close</span><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" id="iry75"
+                                  class="ms-2">
+                                  <path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"></path>
+                              </svg></a></td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+
+
+<!-- EDITAR 
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" 
+      data-bs-target="#editarModal" data-bs-whatever="@getbootstrap">Open modal for @getbootstrap</button>-->
+
+      <div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Agregar Pago</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+
+            <div class="modal-body">
+
+              <form id="driver-form">
+
+                <div class="mb-3">
+                  <label for="recipient-name" class="col-form-label ">Conductor</label>
+                  <input type="week" name="week" id="week" class="form-control" required>
+                </div>    
+
+                <div class="mb-3">
+                    <input type="number" class="form-control" id="generado-uber" placeholder="Monto Generado $ UBER" autofocus>
+                </div>    
+
+
+                <div class="mb-3 form-group row">
+                    <div class="form-group">
+                        <div class="d-inline-block ">
+                            <input type="number" class="form-control marg-der" id="descuento-pago" placeholder="Descuento $">
+                        </div>
+    
+                        <div class="d-inline-block marg-izq">
+                            <input type="text" class="form-control marg-der" id="descuento-concepto" placeholder="Concepto">
+                        </div>
+                    </div>
+                </div>
+
+      
+                <div class="mb-3 form-group row">
+                    <div class="form-group">
+                        <div class="d-inline-block ">
+                            <input type="number" class="form-control marg-der" id="varios-pago" placeholder="Varios $">
+                        </div>
+    
+                        <div class="d-inline-block marg-izq">
+                            <input type="text" class="form-control marg-der" id="varios-concepto" placeholder="Concepto">
+                        </div>
+                    </div>
+                </div>
+
+              <!--
+                <div class="mb-3">
+                  <label for="recipient-name" class="col-form-label">Recipient:</label>
+                  <input type="text" class="form-control" id="recipient-name">
+                </div>-->
+
+     
+
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-primary" id="btn-pago">Crear</button>
+            </div>
+          </div>
+        </div>
+
+        
+      </div>
+
+
+
+      <!-- Modal Crear activos semanales-->
+      <div class="modal fade" id="generarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Generar Semana</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+
+            <div class="modal-body">
+
+              <form id="generador-form">
+
+                <div class="modal-body">
+
+                    <div class="mb-3">
+                      <label for="recipient-name" class="col-form-label ">Generar Esquema-Semanal conductores activos</label>
+                      <input type="week" name="week" id="pago-week" class="form-control" required>
+                    </div>    
+
+                  </form>
+
+               </div>
+             
+              
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-primary" id="btn-generar">Generar</button>
+            </div>
+
+         
+      
+      
+   
+          </div>
+        </div>
+
+        
+      </div>
+
+      
+      <div class="modal fade" id="pago-semanaModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Semana Agregada</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+             
+
+            <div class="modal-body">
+
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label " >Ingrese Pagos:  </label>
+                  <label id="fechia"></label>
+                <hr>
+              </div>   
+
+          
+              <form id="generator">
+                
+           
+
+      
+   
+
+
+              
+              </form>
+              
+
+                   
+                   
+            
+             
+            
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-primary" id="btn-updatePago">Generar</button>
+            </div>
+
+         
+      
+      
+   
+          </div>
+        </div>
+
+        
+      </div>
+
+
+
+      <!-- Edicion Modal -->
+      
+      <div class="modal fade" id="edicionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Editar</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+
+            <div class="modal-body">
+
+              <form id="driver-form">
+
+                <div class="mb-3">
+                  <label for="recipient-name" class="col-form-label ">CONDUCTOR: </label>
+                  <input type="week" name="week" id="week-edit" class="form-control" required>
+                </div>    
+
+                <div class="row mb-3">
+                  <div class="col-md-4 ml-auto"> <label for="">MONTO GENERADO: </label> </div>
+                  <div class="col-md-8 ml-auto">    <input type="number" class="form-control" id="generado-edit" placeholder="Monto Generado $ UBER" autofocus> </div>
+                </div>
+
+
+                <div class="row mb-3">
+                  <div class="col-md-4 ml-auto"> <label for="">DESCUENTO: </label> </div>
+                  <div class="col-md-8 ml-auto">   <input type="number" class="form-control marg-der" id="descuento-edit" placeholder="Descuento $"> </div>
+                </div>
+
+
+      
+                <div class="mb-3 row">
+                  <div class="col-md-4 ml-auto">
+                    <label for="">VARIOS: </label>
+                </div>
+                <div class="col-md-8 ml-auto">
+                            <input type="number" class="form-control marg-der" id="varios-edit" placeholder="Varios $">
+                        </div>
+                    </div>
+  
+
+  
+
+              <div class="row mb-3">
+                <div class="col-md-4 ml-auto"> <label for="">PAGADO: </label> </div>
+                <div class="col-md-8 ml-auto"> <input type="number" class="form-control" id="pagado-edit" placeholder="Pagado"> </div>
+              </div>
+
+
+           
+          <div class="row mb-3">
+            <div class="col-md-4 ml-auto"> <label for="">DEBE: </label> </div>
+            <div class="col-md-8 ml-auto">  <input type="number" class="form-control" id="debe-edit" placeholder="Debe"> </div>
+          </div>
+
+          <div class="mb-3">
+            
+        </div>    
+
+        <div class="row mb-3">
+          <div class="col-md-4 ml-auto"> <label for="">STATUS: </label> </div>
+          <div class="col-md-8 ml-auto">  <select name="status" class="form-control text-center" id="status-edit">
+            <option value="pendiente" class="fw-bold">pendiente </option>
+            <option value="pagado" class="fw-bold">pagado</option>
+            <option value="cancelado"class="fw-bold">cancelado </option>
+          </select> </div>
+        </div>
+
+
+              <!--
+                <div class="mb-3">
+                  <label for="recipient-name" class="col-form-label">Recipient:</label>
+                  <input type="text" class="form-control" id="recipient-name">
+                </div>-->
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-primary" id="btn-pago" onclick="updateE(idE)">Editar</button>
+            </div>
+          </div>
+        </div>  
+      </div>
+
+
+</body>
+
+
+<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
+<script src="get-pagos.js"></script>
+<script>
+    $(function(){
+      $("#nav-placeholder").load("nav-bar.html");
+    });
+
+
+
+    
+    </script>
+</html>

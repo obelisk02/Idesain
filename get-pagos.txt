@@ -1,0 +1,50 @@
+
+// Agregar pago
+db =firestore.collection("Pagos")
+let submitBtn = document.getElementById('btn-pago')
+submitBtn.addEventListener('click',(e)=>{
+    e.preventDefault()
+    const driverform= document.getElementById('driver-form');
+    x = document.getElementById("driver").value;
+    let nombre= x;
+    let fecha = driverform['week'].value;
+    let uber_generado = driverform['generado-uber'].value; 
+    let descuento = driverform['descuento-pago'].value;
+    let concepto_descuento = driverform['descuento-concepto'].value;
+    let varios = driverform['varios-pago'].value;
+    let concepto_varios = driverform['varios-concepto'].value;
+    let auto_renta= rentaSemanal;
+  
+    base= x +" "+ fecha;
+    console.log(base)
+
+    db.doc(base).set({
+        id: nombre,
+        fecha: fecha,
+        uber_generado: uber_generado,
+        descuento: descuento,
+        concepto_descuento: concepto_descuento,
+        varios: varios,
+        concepto_varios: concepto_varios,
+        renta_auto: auto_renta,
+        status: "pendiente",
+        pagado: 0,
+        debe: 0
+    }).then ( ()=>{
+        console.log("Data enviada");  driverform.reset();
+
+         //alert("Se agrego correctamente conductor")
+    $(document).ready(function() {
+      $("#success-alert").hide();
+        $("#success-alert").fadeTo(2000, 500).slideUp(500, function() {
+          $("#success-alert").slideUp(500);
+        });
+     
+       
+    });
+
+    }).catch((error) =>{
+        console.log(error)
+    })
+})
+

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Auto</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="form-driver.css">
+</head>
+<body>
+    <div id="nav-placeholder">
+
+    </div>
+   
+
+    <div class="registration-form">
+        <form id="form-car">
+            <div class="form-icon">
+                <span><i class="fas fa-car-side"></i></span>
+            </div>
+
+            <div class="form-group">
+                <input type="text" class="form-control item" id="id-auto" placeholder="ID economico" maxlength="5" autofocus>
+            </div>
+
+            <div class="form-group">
+                <input type="text" class="form-control item" id="marca-auto" placeholder="Marca">
+            </div>
+    
+            <div class="form-group">
+                <input type="text" class="form-control item" id="modelo-auto" placeholder="Modelo">
+            </div>
+            
+            <div class="form-group">
+                <select name="anio" id="anio-auto" class="form-control item" placeholder="Año">
+                    <option value=2014 style="font-weight: bold">2016</option>
+                    <option value=2015 style="font-weight: bold">2017</option>
+                    <option value=2016 style="font-weight: bold">2018</option>
+                    <option value=2017 style="font-weight: bold">2019</option>
+                    <option value=2018 style="font-weight: bold">2020</option>
+                    <option value=2019 style="font-weight: bold">2021</option>
+                    <option value=2020 style="font-weight: bold">2022</option>
+                    <option value=2021 style="font-weight: bold">2023</option>
+                    <option value=2022 style="font-weight: bold">2024</option>
+                    <option value=2023 style="font-weight: bold">2025</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <input type="text" class="form-control item" id="placa-auto" placeholder="Placas">
+            </div>
+
+           <!-- <div class="form-group">
+                <input type="number" class="form-control item" id="renta-auto" placeholder="Renta Semanal">
+            </div>
+ -->
+            <div class="form-group">
+                <select name="auto" id="inversion-auto" class="form-control item" placeholder="Elige Inversion">
+                   <!-- <option value=Vacio style="font-weight: bold"></option> -->
+                   
+               
+                </select>
+            </div>
+    
+            <div class="form-group">
+                <button type="submit" class="btn btn-block create-account" id="btn-auto-submit">Crear Auto</button>
+            </div>
+        </form>
+        <div class="social-media">
+            <h5>Auto</h5>
+            <div class="social-icons">
+              
+            </div>
+        </div>
+        </div>
+    
+</body>
+
+<!--<script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-firestore.js"></script> -->
+
+<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
+<script src="post-car.js"></script>
+
+<script>
+    $(function(){
+      $("#nav-placeholder").load("nav-bar.html");
+    });
+    </script>
+</html>

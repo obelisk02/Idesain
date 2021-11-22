@@ -1,0 +1,21 @@
+.dropdown {
+  border-radius: 0;
+  border: 0;
+}
+.dropdown-menu {
+  border: 0;
+  top: 80%;
+  border-radius: 0px 0px 5px 5px;
+}
+.dropdown-item:hover {
+  color: #fff;
+  background-color: rgb(105, 105, 105);
+}
+.dropdown-menu a {
+  color: #fff;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+  margin-top: 0;
+}
