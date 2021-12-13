@@ -48,3 +48,22 @@ submitBtn.addEventListener('click',(e)=>{
     })
 })
 
+
+
+
+
+ const div_generador2= document.getElementById('infoService1');
+           $(div_generador2).append('   <div class="card"><div class="card-body " >' +
+           '<div class="container"> <div class="row"> <div class="col-2">' +
+           '<img src="./img/info.png" class="align-items-center" alt=""></div>' +
+           ' <div class="col-8">'+
+           '<label id="name'+contador2+'"class="col-form-label fw-bold" style="display: inline-block;">'+doc.data().titulo+ '</label> <span class="badge bg-info text-dark  justify-content-end" style="margin-left: auto;"id="auto'+contador2+'">'+ doc.data().auto+'</span>'  +  
+          '<div class="row padd-div"> <div class="col-8 col-sm-6">Fecha: '+doc.data().fecha+'</div>  <div class="col-4 col-sm-6">  </div>  </div> ' +
+          '<div class="row padd-div"> <div class="col-8 col-sm-6">Descripcion: '+doc.data().descripcion+' </div> <div class="col-4 col-sm-6">  </div>  </div>' +
+      
+          '<div class="row padd-div"> <div class="col-8 col-sm-6">Monto:'+doc.data().total+' </div> <div class="col-4 col-sm-6">  </div>  </div> </div> '+
+          '<div class="col-2"> <div class="btn-group"> <button class="btn btn-sm btn-warning w-50" type="button" onclick="abrirModalEdit()">'+
+          '<i class="fa fa-pencil" aria-hidden="true"><i class="far fa-edit"></i></i>  </button> '+
+          '<button class="btn btn-sm w-50 btn-danger" type="button"  onclick="eliminarD()">'+
+          '<i class="fa fa-trash-o" aria-hidden="true"><i class="fas fa-trash-alt"></i> </button>'+
+          '</div> </div>  </div> </div>  <hr>' );   

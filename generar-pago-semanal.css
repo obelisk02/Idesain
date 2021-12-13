@@ -1,0 +1,19 @@
+.bg-color1 {
+  background-color: #0b4f6c;
+  padding: 10px;
+}
+
+.bg-color2 {
+  background-color: #01baef;
+  border-right: 1px solid #000;
+}
+
+/*label {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  text-align: right;
+  width: 400px;
+  line-height: 26px;
+  margin-bottom: 10px;
+} */

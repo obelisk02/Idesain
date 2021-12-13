@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agregar Auto</title>
+    <title>Pago conductor</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -12,62 +12,160 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
     <link rel="stylesheet" href="navbar.css">
   
+    <link rel="stylesheet" href="generar-pago-semanal.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" integrity="sha512-ZKX+BvQihRJPA8CROKBhDNvoc2aDMOdAlcm7TUQY+35XYtrd3yh95QOOhsPDQY9QnKE0Wqag9y38OIgEvb88cA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 </head>
 <body>
     <div id="nav-placeholder">
 
     </div>
-    <head><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css"></head>
-    <br />
-    <div class="inner contact">
-                    <!-- Form Area -->
-                    <div class="contact-form">
-                        <!-- Form -->
-                        <form id="contact-us" method="post" action="#">
-                            <!-- Left Inputs -->
-                            <div class="col-xs-6 wow animated slideInLeft" data-wow-delay=".5s">
-                                <!-- Name -->
-                                <input type="text" name="name" id="name" required="required" class="form" placeholder="Name" />
-                                <!-- Email -->
-                                <input type="email" name="mail" id="mail" required="required" class="form" placeholder="Email" />
-                                <!-- Subject -->
-                                <input type="text" name="subject" id="subject" required="required" class="form" placeholder="Subject" />
-                            </div><!-- End Left Inputs -->
-                            <!-- Right Inputs -->
-                            <div class="col-xs-6 wow animated slideInRight" data-wow-delay=".5s">
-                                <!-- Message -->
-                                <textarea name="message" id="message" class="form textarea"  placeholder="Message"></textarea>
-                            </div><!-- End Right Inputs -->
-                            <!-- Bottom Submit -->
-                            <div class="relative fullwidth col-xs-12">
-                                <!-- Send Button -->
-                                <button type="submit" id="submit" name="submit" class="form-btn semibold">Send Message</button> 
-                            </div><!-- End Bottom Submit -->
-                            <!-- Clear -->
-                            <div class="clear"></div>
-                        </form>
     
-                        <!-- Your Mail Message -->
-                        <div class="mail-message-area">
-                            <!-- Message -->
-                            <div class="alert gray-bg mail-message not-visible-message">
-                                <strong> .</strong> 
-                            </div>
-                        </div>
+
+<br>
+    <div class="container bg-color1 py-6"> 
+      <div class="d-inline-block  w-25"> 
+        <input type="week" name="week" id="week-edit" class="form-control" required> </div>
+<div class="d-inline-block ">
+  <button id="btnCrear" class="btn btn-primary" title="Crear"  > <i class="far fa-plus-square"></i> Crear Semana</button> 
+ 
+  <!-- <button id="btnCrear" class="btn btn-primary text-right" title="Agrega un cobro" data-bs-toggle="modal" data-bs-target="#editarModal" ><i class="fas fa-dollar-sign"></i> Monto Generado</button>  --> 
+
+</div>
+</div>
+
+         
+        
+  
+    <body class="bg-light">
+       
+      <!-- ADD TASK -->
+      <div class="container p-4" >
+        <div class="row" >
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-body">
     
-                    </div><!-- End Contact Form Area -->
-                </div><!-- End Inner -->
+                <h1 class="h4" id="row1">Conductores activos</h1>
+    
+            
+              </div>
+            </div>
+          </div>
+          <!-- Tasks List -->
+          <div class="col-md-6 line2" id="tasks-container">
+            <div class="card">
+                <div class="card-body">
+      
+                  <h1 class="h4">Servicios y varios </h1>
+                  </div>
+                  </div>
+                  </div>
+          </div>
+        </div>
 
 
+        <div class="container p-4">
+          <div class="row">
+            <div class="col-md-6" id="infoDriver1">
+
+              <!--<div class="card" >
+                <div class="card-body" >
     
+      
+              
+                </div>
+              </div>-->
+
+              
+
+            </div>
+            <!-- Tasks List -->
+            <div class="col-md-6 line2" id="infoService1">
+              
+              <!--<div class="card"  >
+                  <div class="card-body" >
+        
+                    </div>
+                    </div> -->
+                    </div>
+            </div>
+          </div>
+      
+    
+
+
+          <!-- MODAL EDICION SERVICIO-->     
+      <div class="modal fade" id="edicionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Editar</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+
+            <div class="modal-body">
+
+              <form id="driver-form">  
+
+                <div class="row mb-3">
+                  <div class="col-md-4 ml-auto"> <label for="">Titulo: </label> </div>
+                  <div class="col-md-8 ml-auto">    <input type="text" class="form-control" id="titulo-edit" placeholder="Titulo" autofocus> </div>
+                </div>
+
+
+                <div class="row mb-3">
+                  <div class="col-md-4 ml-auto"> <label for="">Descripcion: </label> </div>
+                  <div class="col-md-8 ml-auto">   <input type="text" class="form-control marg-der" id="desc-edit" placeholder="Descripcion"> </div>
+                </div>
+<hr>
+                <div class="row mb-3">
+                  <div class="col-md-4 ml-auto"> <label for="">Pagado: </label> </div>
+                  <div class="col-md-8 ml-auto">  <input type="number" class="form-control" id="pagado-edit" placeholder="Pagado"> </div>
+                </div>
+           
+          <div class="row mb-3">
+            <div class="col-md-4 ml-auto fw-bolder"> <label for="">Total: </label> </div>
+            <div class="col-md-8 ml-auto">  <input type="number" class="form-control fw-bolder" id="total-edit" placeholder="Total"> </div>
+          </div>
+
+          <div class="mb-3">
+            
+        </div>    
+
+        <div class="row mb-3">
+          <div class="col-md-4 ml-auto"> <label for="">STATUS: </label> </div>
+          <div class="col-md-8 ml-auto">  <select name="status" class="form-control text-center" id="status-edit">
+            <option value="pendiente" class="fw-bold">pendiente </option>
+            <option value="pagado" class="fw-bold">pagado</option>
+            <option value="cancelado"class="fw-bold">cancelado </option>
+          </select> </div>
+        </div>
+
+
+              <!--
+                <div class="mb-3">
+                  <label for="recipient-name" class="col-form-label">Recipient:</label>
+                  <input type="text" class="form-control" id="recipient-name">
+                </div>-->
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-primary" id="btn-pago" onclick="updateE(idE)">Editar</button>
+            </div>
+          </div>
+        </div>  
+      </div>
 </body>
 
-<!--<script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-firestore.js"></script> -->
 
 <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
-<script src=""></script>
+<script src="pago-semanal.js"></script>
 
 <script>
     $(function(){

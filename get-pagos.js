@@ -21,6 +21,8 @@ window.onload = function() {
 
             tablapagos.innerHTML += ` <tr>     
             <th scope="row">${doc.data().fecha}</th>
+            <td class="text-center"> <a data-lightbox="${doc.data().img_url} " data-title="${doc.data().fecha}" href="${doc.data().img_url}"><img id="myImg${cont}" src="${doc.data().img_url}" width="40" height="40"/></a> </th>
+           
             <td class="text-center">${doc.data().uber_generado}</td>
             <td class="text-center" >${doc.data().descuento}</td>
             <td class="text-center" >${doc.data().varios}</td>
@@ -29,10 +31,6 @@ window.onload = function() {
             <td class="text-center" >${doc.data().pagado}</td>  
             <td class="text-center" >${doc.data().debe}</td> 
 
-            <td class="text-center">
-        <button class="btn btn-sm btn-success w-50" type="button" onclick="">
-        <i class="fas fa-file-invoice-dollar"></i></button></td>
-              
             <td class="text-center"> <div class="btn-group">
             <button class="btn btn-sm btn-warning w-50" type="button" 
             onclick="abrirModalEdit('${doc.id}','${doc.data().fecha}','${doc.data().uber_generado}','${doc.data().descuento}','${doc.data().varios}','${doc.data().monto_a_pagar}','${doc.data().status}','${doc.data().pagado}','${doc.data().debe}','${doc.data().renta_auto}')">
@@ -62,6 +60,16 @@ window.onload = function() {
             status1.className += " badge bg-danger";
           }
 
+
+          // check image
+          var elem = "myImg"+cont;
+          elem = document.getElementById(elem);
+          if(elem.getAttribute('src') == "undefined")
+          {
+            //vacio
+            elem.src= "./img/NO-IMG.png"
+          }
+          
           cont++;
         });
     })
@@ -131,8 +139,7 @@ submitBtn.addEventListener('click',(e)=>{
     base= x +" "+ fecha;
     console.log(base)
 
-    var washingtonRef = db.collection("Pagos").doc(base);
-    return washingtonRef.update({
+    db.collection("Pagos").doc(base).set({
       id: nombre,
       fecha: fecha,
       uber_generado: uber_generado,
@@ -146,7 +153,7 @@ submitBtn.addEventListener('click',(e)=>{
       debe: 0
   })
   .then(() => {
-      console.log("Document successfully updated!");
+    console.log("Document successfully written!");
   })
   .catch((error) => {
       // The document probably doesn't exist.
@@ -180,17 +187,16 @@ btnBuscar.addEventListener('click',(e)=>{
 
             tablapagos.innerHTML += ` <tr>     
             <th scope="row">${doc.data().fecha}</th>
+            <td class="text-center"> <a data-lightbox="${doc.data().img_url} " data-title="${doc.data().fecha}" href="${doc.data().img_url}"><img id="myImg${cont}" src="${doc.data().img_url}" width="40" height="40"/></a> </th>
+           
             <td class="text-center">${doc.data().uber_generado}</td>
             <td class="text-center" >${doc.data().descuento}</td>
             <td class="text-center" >${doc.data().varios}</td>
-            <td class="text-center fw-bold text-danger" >${doc.data().monto_a_pagar}</td>  
+            <td class="text-center  fw-bolder text-decoration-underline" >${doc.data().monto_a_pagar}</td>  
             <td class="text-center" > <span  id="status-tabla${cont}">${doc.data().status}</span></td>  
-            <td class="text-center" >${doc.data().pagado}</td>  
-            <td class="text-center" >${doc.data().debe}</td> 
+            <td class="text-center fw-bold text-success" >${doc.data().pagado}</td>  
+            <td class="text-center fw-bolder text-danger" >${doc.data().debe}</td> 
 
-            <td class="text-center">
-        <button class="btn btn-sm btn-success w-50" type="button" onclick="">
-        <i class="fas fa-file-invoice-dollar"></i></button></td>
               
             <td class="text-center"> <div class="btn-group">
             <button class="btn btn-sm btn-warning w-50" type="button" 
@@ -221,6 +227,15 @@ btnBuscar.addEventListener('click',(e)=>{
           }
           if (status1.textContent == "cancelado"){
             status1.className += " badge bg-danger";
+          }
+
+          // Check empty image
+          var elem = "myImg"+cont;
+          elem = document.getElementById(elem);
+          if(elem.getAttribute('src') == "undefined")
+          {
+            //vacio
+            elem.src= "./img/NO-IMG.png"
           }
 
           cont++;

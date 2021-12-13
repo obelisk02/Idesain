@@ -12,6 +12,10 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
     <link rel="stylesheet" href="navbar.css">
     <link rel="stylesheet" href="form-service.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" integrity="sha512-ZKX+BvQihRJPA8CROKBhDNvoc2aDMOdAlcm7TUQY+35XYtrd3yh95QOOhsPDQY9QnKE0Wqag9y38OIgEvb88cA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 </head>
 <body>
     <div id="nav-placeholder">
@@ -27,16 +31,18 @@
             <thead class="thead-dark">
                 <tr>
                   
-                  <th scope="col">Auto</th>
+                  <th scope="col" class="text-center">#</th>
+                  <th scope="col" class="text-center">Auto</th>
                   <th scope="col" class="text-center">Titulo</th>
-                  <th scope="col">Descripcion</th>
+                  <th scope="col" class="text-center">Descripcion</th>
                   <th scope="col" class="text-center">Fecha</th>
                   <th scope="col" class="text-center">Total</th>
                   <th scope="col" class="text-center">Imagen</th>
+                  <th scope="col" class="text-center">Subir</th>
                   <th scope="col" class="text-center">Acciones</th>
                 </tr>
               </thead>
-              <tbody id="tabla-driver">
+              <tbody id="tabla-service">
                 <tr>
                   <th scope="row">1</th>
                   <td ></td>
@@ -47,7 +53,7 @@
           </table>
 
 
-
+            <!-- MODAL REGISTRACION-->
           <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
@@ -92,41 +98,105 @@
                 </div>
 
     
-    <div class="registration-form">
-
-
-            <div class="form-group">
-               
-            </div>
-
-            <div class="form-group">
-               
-            </div>
-
-            <div class="form-group">
-                
-            </div>
-
-            <div class="form-group">
-                
-            </div>
-
-            <div class="form-group">
-               
-            </div>
     
-            <div class="form-group">
-                
-            </div>
-        </form>
-        <div class="social-media">
-            <h5>Auto</h5>
-            <div class="social-icons">
-              
-            </div>
+
+
+         <!-- Modal IMAGEN -->
+<div class="modal fade" id="subirImage" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Imagen</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <div class="mb-3">
+          <label for="recipient-name" class="col-form-label">Recibo:</label>
+          <label id="fecha"></label> <br>
+          <label id="persona"></label> <br><br>
+          
+          <img src="" alt="Ticket" id="ticketImg" width="100%" height="100%">
+          <input type="file" id="selectedFile" style="display: none;" />
+          <input type="button" value="Buscar Imagen " onclick="document.getElementById('selectedFile').click();" class="form-control btn btn-primary" id="recipient-name"/>
         </div>
-        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="uploadIMG()">Subir</button>
+      </div>
+    </div>
+  </div>
+</div>
     
+
+
+
+
+    <!-- MODAL EDICION SERVICIO-->     
+    <div class="modal fade" id="edicionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Editar</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+
+          <div class="modal-body">
+
+            <form id="driver-form">  
+
+              <div class="row mb-3">
+                <div class="col-md-4 ml-auto"> <label for="">Titulo: </label> </div>
+                <div class="col-md-8 ml-auto">    <input type="text" class="form-control" id="titulo-edit" placeholder="Titulo" autofocus> </div>
+              </div>
+
+
+              <div class="row mb-3">
+                <div class="col-md-4 ml-auto"> <label for="">Descripcion: </label> </div>
+                <div class="col-md-8 ml-auto">   <input type="text" class="form-control marg-der" id="desc-edit" placeholder="Descripcion"> </div>
+              </div>
+<hr>
+              <div class="row mb-3">
+                <div class="col-md-4 ml-auto"> <label for="">Pagado: </label> </div>
+                <div class="col-md-8 ml-auto">  <input type="number" class="form-control" id="pagado-edit" placeholder="Pagado"> </div>
+              </div>
+         
+        <div class="row mb-3">
+          <div class="col-md-4 ml-auto fw-bolder"> <label for="">Total: </label> </div>
+          <div class="col-md-8 ml-auto">  <input type="number" class="form-control fw-bolder" id="total-edit" placeholder="Total"> </div>
+        </div>
+
+        <div class="mb-3">
+          
+      </div>    
+
+      <div class="row mb-3">
+        <div class="col-md-4 ml-auto"> <label for="">STATUS: </label> </div>
+        <div class="col-md-8 ml-auto">  <select name="status" class="form-control text-center" id="status-edit">
+          <option value="pendiente" class="fw-bold">pendiente </option>
+          <option value="pagado" class="fw-bold">pagado</option>
+          <option value="cancelado"class="fw-bold">cancelado </option>
+        </select> </div>
+      </div>
+
+
+            <!--
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">Recipient:</label>
+                <input type="text" class="form-control" id="recipient-name">
+              </div>-->
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-primary" id="btn-pago" onclick="updateE(idE)">Editar</button>
+          </div>
+        </div>
+      </div>  
+    </div>
 </body>
 
 <!--<script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js"></script>
@@ -134,6 +204,8 @@
 
 <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-storage.js"></script>
+
 <script src="post-service.js"></script>
 
 <script>

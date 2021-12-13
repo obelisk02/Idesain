@@ -11,8 +11,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
     <link rel="stylesheet" href="navbar.css">
-    <link rel="stylesheet" href="show-driver.css">
+  
     <link rel="stylesheet" href="pago-conductor.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" integrity="sha512-ZKX+BvQihRJPA8CROKBhDNvoc2aDMOdAlcm7TUQY+35XYtrd3yh95QOOhsPDQY9QnKE0Wqag9y38OIgEvb88cA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 </head>
 <body>
     <div id="nav-placeholder">
@@ -31,9 +35,9 @@
              </select> </div>
  <div class="d-inline-block ">
     <button id="btnBuscar" class="btn btn-primary" title="Buscar Producto" data-bs-toggle="modal" > <i class="fas fa-search"></i></button> 
-    <button id="btnActualizar" class="btn btn-warning white" title="Agrega un cobro" data-bs-toggle="modal" data-bs-target="#editarModal" ><i class="far fa-file-alt"></i> Servicios</button>    
+    <button id="btnActualizar" class="btn btn-warning white" title="Agrega un cobro" data-bs-toggle="modal" data-bs-target="#editarModal" ><i class="far fa-file-alt"></i> Crear un pago</button>    
      
-    <button id="btnCrear" class="btn btn-danger white" title="Crea cobro semanal de cada usuario" data-bs-toggle="modal" data-bs-target="#generarModal" ><i class="fas fa-money-bill-wave"></i> Nueva Semana</button>       
+    <button id="btnCrear" class="btn btn-danger white" title="Crea cobro semanal de cada usuario" data-bs-toggle="modal" data-bs-target="#generarModal" ><i class="fas fa-money-bill-wave"></i> Generar semana</button>       
 
     <!-- <button id="btnCrear" class="btn btn-primary text-right" title="Agrega un cobro" data-bs-toggle="modal" data-bs-target="#editarModal" ><i class="fas fa-dollar-sign"></i> Monto Generado</button>  --> 
  
@@ -46,6 +50,7 @@
               <thead class="table-secondary">
                   <tr>
                       <th scope="col">Fecha #</th>
+                      <th scope="col" class="text-center">Imagen</th>
                       <th scope="col" class="text-center">Monto Generado</th>
                       <th scope="col" class="text-center">Descuentos</th>
                       <th scope="col" class="text-center">Varios</th>
@@ -53,7 +58,6 @@
                       <th scope="col" class="text-center">Status</th>
                       <th scope="col" class="text-center">Pagado</th>
                       <th scope="col" class="text-center">Debe</th>
-                      <th scope="col" class="text-center">Pago</th>
                       <th scope="col" class="text-center">Acciones</th>
 
                   </tr>
@@ -304,9 +308,10 @@
             <div class="col-md-4 ml-auto"> <label for="">DEBE: </label> </div>
             <div class="col-md-8 ml-auto">  <input type="number" class="form-control" id="debe-edit" placeholder="Debe"> </div>
           </div>
-
-          <div class="mb-3">
-            
+<hr>
+          <div class="row mb-3">
+            <div class="col-md-4 ml-auto fw-bolder"> <label for="">TOTAL A PAGAR: </label> </div>
+            <div class="col-md-8 ml-auto ">  <input type="number" class="form-control fw-bolder" id="totalA-edit" placeholder="Total a pagar"> </div>
         </div>    
 
         <div class="row mb-3">
