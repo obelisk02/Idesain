@@ -95,6 +95,35 @@ const firebaseConfig = {
   firebase.initializeApp(firebaseConfig);
   const firestore = firebase.firestore()
 
+
+  // PINTAR LOS SERVICIOS EN MODAL 
+  //const selectPintar= document.getElementById('infoService1');
+   //Muestra los servicios
+
+
+   firestore.collection("Servicios").get().then((querySnapshot) => {  let contservice = 1;
+    querySnapshot.forEach((doc) => {
+
+        //console.log(doc.id, " => ", doc.data());
+   
+        let x = document.getElementById("infoService1");
+        let option = document.createElement("option");
+ 
+        texto1= doc.id ; //data().id  +" " + doc.data().marca + " " + doc.data().modelo +" " + doc.data().anio
+        option.text = texto1
+        x.add(option,x[contservice]);
+       
+
+
+    });
+});
+
+    
+    
+       
+
+
+
   const tablapagos= document.getElementById('tabla-pagos');
   //Saca los conductores
   const items=[];
@@ -203,7 +232,7 @@ btnBuscar.addEventListener('click',(e)=>{
               
             <td class="text-center"> <div class="btn-group">
             <button class="btn btn-sm btn-warning w-50" type="button" 
-            onclick="abrirModalEdit('${doc.id}','${doc.data().fecha}','${doc.data().uber_generado}','${doc.data().descuento}','${doc.data().varios}','${doc.data().monto_a_pagar}','${doc.data().status}','${doc.data().pagado}','${doc.data().debe}','${doc.data().renta_auto}')">
+            onclick="abrirModalEdit('${doc.id}','${doc.data().fecha}','${doc.data().uber_generado}','${doc.data().descuento}','${doc.data().varios}','${doc.data().monto_a_pagar}','${doc.data().status}','${doc.data().pagado}','${doc.data().debe}','${doc.data().renta_auto}','${doc.data().servicio}')">
               <i class="fa fa-pencil" aria-hidden="true"><i class="far fa-edit"></i></i>
             </button>
             <button class="btn btn-sm w-50 btn-danger" type="button"  
@@ -297,8 +326,8 @@ btnBuscar.addEventListener('click',(e)=>{
 
   // Edit data tabla
   const myModaledit = new bootstrap.Modal(document.getElementById('edicionModal'));
-  let idE,fechaE, uberE,decuentoE,montoE,estatusE, pagadoE, debeE, monto_generado, rentaauto;
-  function abrirModalEdit(id, fecha, uber, descuento, varios, monto_pagar, estatus, pagado, debe, rentauto) {
+  let idE,fechaE, uberE,decuentoE,montoE,estatusE, pagadoE, debeE, monto_generado, rentaauto, servicioE;
+  function abrirModalEdit(id, fecha, uber, descuento, varios, monto_pagar, estatus, pagado, debe, rentauto, servicio_name) {
 
     myModaledit.show()
   idE= id;
@@ -312,6 +341,7 @@ btnBuscar.addEventListener('click',(e)=>{
   debeE = debe;
   monto_generado= uber;
   rentaauto = rentauto;
+  servicioE = servicio_name;
 
     document.getElementById('week-edit').value= fechaE;
     document.getElementById('generado-edit').value= uberE;
@@ -324,6 +354,7 @@ btnBuscar.addEventListener('click',(e)=>{
     document.getElementById('debe-edit').value= debeE; 
 
     document.getElementById('totalA-edit').value= montoE ;
+    document.getElementById('infoService1').value= servicioE ;
   }
 
 // Update objeto de edicion

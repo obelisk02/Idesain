@@ -55,7 +55,21 @@ firebase.initializeApp(firebaseConfig);
 
 
 
+  
+function eliminarD(id){
 
+  let confirmar1 = confirm("Desea eliminar");
+if (confirmar1) {
+  firestore.collection("Socio").doc(id).delete().then(() => {
+    console.log("Document successfully deleted!"); 
+    
+  }).catch((error) => {
+    console.error("Error removing document: ", error);
+  }); 
+ 
+ 
+}
+}
 
 
 
@@ -92,3 +106,7 @@ firebase.initializeApp(firebaseConfig);
 
       partnerform.reset()
   })
+
+
+
+
