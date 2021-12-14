@@ -90,10 +90,11 @@ firebase.initializeApp(firebaseConfig);
           kilometros: "",
           kmviejo: "",
           servicios: "",
-          //renta_semana: renta,
           inversion: inversion,
           matutino: "",
-          vespertino: ""
+          vespertino: "",
+          reparar:"",
+          observaciones: ""
           
 
 

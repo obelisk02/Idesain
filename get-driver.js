@@ -70,6 +70,7 @@ function abrirModalEdit(id,name,auto,renta,telefono,turno,activo) {
   turnoE= turno;
   activoE= activo;
 
+  console.log(telefonoE);
   document.getElementById('name-driver').value= nameE;
   document.getElementById('auto-driver').value= autoE;
   document.getElementById('phone-number').value= telefonoE;

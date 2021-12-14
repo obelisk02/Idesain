@@ -16,7 +16,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" integrity="sha512-ZKX+BvQihRJPA8CROKBhDNvoc2aDMOdAlcm7TUQY+35XYtrd3yh95QOOhsPDQY9QnKE0Wqag9y38OIgEvb88cA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    <link rel="shortcut icon" href="./img/favicon.png">
 </head>
 <body>
     <div id="nav-placeholder">
@@ -35,9 +35,10 @@
              </select> </div>
  <div class="d-inline-block ">
     <button id="btnBuscar" class="btn btn-primary" title="Buscar Producto" data-bs-toggle="modal" > <i class="fas fa-search"></i></button> 
-    <button id="btnActualizar" class="btn btn-warning white" title="Agrega un cobro" data-bs-toggle="modal" data-bs-target="#editarModal" ><i class="far fa-file-alt"></i> Crear un pago</button>    
+    <button id="btnActualizar" class="btn btn-warning white" title="Agrega un cobro" data-bs-toggle="modal" data-bs-target="#editarModal" ><i class="far fa-file-alt"></i> Crear Pago Individual</button>    
      
-    <button id="btnCrear" class="btn btn-danger white" title="Crea cobro semanal de cada usuario" data-bs-toggle="modal" data-bs-target="#generarModal" ><i class="fas fa-money-bill-wave"></i> Generar semana</button>       
+   <!--<button id="btnCrear" class="btn btn-danger white" title="Crea cobro semanal de cada usuario" data-bs-toggle="modal" data-bs-target="#generarModal" ><i class="fas fa-money-bill-wave"></i> Generar semana</button>       -->
+   <button id="btnCrear" onclick="window.location.href='generar-pago-semanal.html';" class="btn btn-danger white" title="Crea cobro semanal de cada usuario"  ><i class="fas fa-money-bill-wave"></i> Generar semana</button>       
 
     <!-- <button id="btnCrear" class="btn btn-primary text-right" title="Agrega un cobro" data-bs-toggle="modal" data-bs-target="#editarModal" ><i class="fas fa-dollar-sign"></i> Monto Generado</button>  --> 
  
@@ -156,7 +157,7 @@
 
 
       <!-- Modal Crear activos semanales-->
-      <div class="modal fade" id="generarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <!--<div class="modal fade" id="generarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -249,7 +250,7 @@
 
         
       </div>
-
+    -->
 
 
       <!-- Edicion Modal -->

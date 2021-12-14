@@ -83,6 +83,10 @@ let renta = driverform['renta-auto'].value;
 let asdf = autosarray.indexOf(auto);
 console.log(sociosarray[asdf]);
 
+if(renta<0){
+  renta = renta * -1
+}
+
 
 db.doc(nombre).set({
     nombre: nombre,
@@ -94,8 +98,7 @@ db.doc(nombre).set({
     inversion: sociosarray[asdf]
 }).then ( ()=>{
     console.log("Data enviada");  driverform.reset();
-
-     //alert("Se agrego correctamente conductor")
+ //alert("Se agrego correctamente conductor")
 $(document).ready(function() {
   $("#success-alert").hide();
     $("#success-alert").fadeTo(2000, 500).slideUp(500, function() {
@@ -107,14 +110,12 @@ $(document).ready(function() {
 
 }).catch((error) =>{
     console.log(error)
-})
+});;
 
   /// sacar id del carro
  // idupdate = auto.substr(auto.length - 5);
  idupdate = auto.substr(0, 5);
   console.log(idupdate)
-
-
 
   // UPDATE
   db= firestore.collection("Auto").doc(idupdate);

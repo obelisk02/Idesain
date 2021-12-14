@@ -16,7 +16,7 @@ const firebaseConfig = {
   
   let cont=1; let texto1=""; sociosarray=[],autosarray=[] ;     
   // 2 arrays
-
+  let contAutos = 1;
   let x = document.getElementById("auto-driver");
   
 firestore.collection("Auto").get().then((querySnapshot) => {
@@ -27,7 +27,7 @@ querySnapshot.forEach((doc) => {
 let option = document.createElement("option");
 texto1= doc.data().id  +" " + doc.data().marca + " " + doc.data().modelo +" " + doc.data().anio
 option.text = texto1
-x.add(option,x[cont]);
+x.add(option,x[contAutos]);
 
 
   autosarray.push(texto1);
@@ -161,20 +161,7 @@ function uploadIMG(){
 
 
   // SUBIR SERVICIO
-        let texto2=""
-  firestore.collection("Auto").get().then((querySnapshot) => {
-    querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-       // console.log(doc.id, " => ", doc.data());
-       let x = document.getElementById("auto-driver");
-       let option = document.createElement("option");
-        texto2= doc.data().id + " "+doc.data().marca + " " + doc.data().modelo +" " + doc.data().anio  
-        option.text = texto2
-        x.add(option)
-       
-
-    });
-});
+ 
 
 const myModal1 = new bootstrap.Modal(document.getElementById('exampleModal'));
 
@@ -206,17 +193,36 @@ const myModal1 = new bootstrap.Modal(document.getElementById('exampleModal'));
           pagado: 0
       
       }).then ( ()=>{
-          console.log("Data enviada")
+          console.log("Data enviada");   alert("Se registro correctamente")
       }).catch((error) =>{
           console.log(error)
       })
-      alert("Se registro correctamente")
+      serviceform.reset();
+      myModal1.hide();
 
-      serviceform.reset()
-      myModal1.hide()
+        // UPDATE HACIA AUTO
+  let result = id.substring(0, 5);
+  let db2= firestore.collection("Auto").doc(result);
+  
+  
+  return db2.update({
+    servicios: id
+  })
+  .then(() => {
+    console.log("Documento se ha actualizado ");  
+  })
+  .catch((error) => {
+    // The document probably doesn't exist.
+    console.error("Error updating document: ", error);
+  });
+  
+  /********** */
+
+      
   });
 
 
+  
 
 
   // EDIT SERVICE
@@ -267,4 +273,40 @@ function updateE(idE){
     // The document probably doesn't exist.
     console.error("Error updating document: ", error);
 });
+}
+
+
+// ELIMINAR
+function eliminarD(id){
+
+  let confirmar1 = confirm("Desea eliminar");
+if (confirmar1) {
+  firestore.collection("Servicios").doc(id).delete().then(() => {
+    console.log("Document successfully deleted!"); 
+    
+  }).catch((error) => {
+    console.error("Error removing document: ", error);
+  }); 
+ 
+  //myModal2.hide()
+ 
+}
+
+
+ // UPDATE HACIA AUTO
+ let result = id.substring(0, 5);
+ let db2= firestore.collection("Auto").doc(result);
+ 
+ 
+ return db2.update({
+   servicios: ""
+ })
+ .then(() => {
+   console.log("Documento se ha actualizado ");  
+ })
+ .catch((error) => {
+   // The document probably doesn't exist.
+   console.error("Error updating document: ", error);
+ });
+
 }
