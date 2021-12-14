@@ -81,6 +81,7 @@ window.onload = function() {
  sessionStorage.removeItem('user_pago');
 };
 
+//************************************************************************************************* */
 
 const firebaseConfig = {
     apiKey: "AIzaSyCWVd8mU-V5rLgbVygpvlN9EMBBJQe5nE8",
@@ -96,8 +97,8 @@ const firebaseConfig = {
 
   const tablapagos= document.getElementById('tabla-pagos');
   //Saca los conductores
-  const items={}
-          let cont=1; let texto1=""; let rentaSemanal ;let x
+  const items=[];
+          let cont=1; let texto1=""; let rentaSemanal ;let x ; let contPerson = 1;
   let dataGET = firestore.collection("Conductor").get().then((querySnapshot) => {
     querySnapshot.forEach((doc) => {
 
@@ -109,11 +110,11 @@ const firebaseConfig = {
        let option = document.createElement("option");
         texto1= doc.id ;
         option.text = texto1
-        x.add(option,x[cont])
+        x.add(option,x[contPerson])
         rentaSemanal= doc.data().renta_auto
        //console.log(rentaSemanal)
 
-
+      contPerson++;
     });
 });
 
@@ -131,10 +132,11 @@ submitBtn.addEventListener('click',(e)=>{
     let fecha = driverform['week'].value;
     let uber_generado = driverform['generado-uber'].value; 
     let descuento = driverform['descuento-pago'].value;
-    let concepto_descuento = driverform['descuento-concepto'].value;
+   // let concepto_descuento = driverform['descuento-concepto'].value;
     let varios = driverform['varios-pago'].value;
-    let concepto_varios = driverform['varios-concepto'].value;
-    let auto_renta= rentaSemanal;
+  //  let concepto_varios = driverform['varios-concepto'].value;
+    let auto_renta= rentaSemanal; auto_renta = auto_renta *-1
+    let total = driverform['total-uber'].value;
   
     base= x +" "+ fecha;
     console.log(base)
@@ -144,16 +146,17 @@ submitBtn.addEventListener('click',(e)=>{
       fecha: fecha,
       uber_generado: uber_generado,
       descuento: descuento,
-      concepto_descuento: concepto_descuento,
+      
       varios: varios,
-      concepto_varios: concepto_varios,
+     
       renta_auto: auto_renta,
       status: "pendiente",
       pagado: 0,
-      debe: 0
+      debe: total,
+      monto_a_pagar: total
   })
   .then(() => {
-    console.log("Document successfully written!");
+    console.log("Document successfully written!"); alert("Creado");
   })
   .catch((error) => {
       // The document probably doesn't exist.
@@ -249,8 +252,48 @@ btnBuscar.addEventListener('click',(e)=>{
 
 
 
- 
+ // FRONT PARA CALCULO DE TOTAL A PAGAR SI LLEGA A EDITARSE
+ function setTotal() {
+  let Pago_rentaauto = parseFloat( document.getElementById('renta-auto').value );
+  let Pago_generado = parseFloat( document.getElementById('generado-edit').value );
+  let Pago_descuento = parseFloat(document.getElementById('descuento-edit').value );
+  let Pago_varios =   parseFloat( document.getElementById('varios-edit').value );
+  let Pago_pagado =   parseFloat( document.getElementById('pagado-edit').value );
+  let Pago_debe =   document.getElementById('debe-edit') ; 
+  
+  let Pago_total =  document.getElementById('totalA-edit');
 
+  let totalF = (Pago_rentaauto + Pago_generado - Pago_descuento +Pago_varios).toFixed(2);
+  
+  Pago_debe.value = totalF;
+  Pago_total.value = totalF;
+
+  
+  //Pago_debe.style.backgroundColor = "#e86464";
+  Pago_total.style.backgroundColor = "#e86464";
+ }
+
+ function setTotal2() {
+  let Pago_rentaauto = parseFloat( document.getElementById('renta-auto').value );
+  let Pago_generado = parseFloat( document.getElementById('generado-edit').value );
+  let Pago_descuento = parseFloat(document.getElementById('descuento-edit').value );
+  let Pago_varios =   parseFloat( document.getElementById('varios-edit').value );
+  let Pago_pagado =   parseFloat( document.getElementById('pagado-edit').value );
+  let Pago_debe =   document.getElementById('debe-edit') ; 
+  
+  let Pago_total =  document.getElementById('totalA-edit');
+
+  let totalF = (Pago_rentaauto + Pago_generado - Pago_descuento +Pago_varios + Pago_pagado).toFixed(2);
+  
+  Pago_debe.value = totalF;
+
+  if (Pago_debe.value == 0){
+  Pago_debe.style.backgroundColor = "#42ad36";}
+  else { 
+    Pago_debe.style.backgroundColor = "#f2db44";
+  }
+  //Pago_total.style.backgroundColor = "#e86464"; #f2db44
+ }
 
   // Edit data tabla
   const myModaledit = new bootstrap.Modal(document.getElementById('edicionModal'));
@@ -273,17 +316,19 @@ btnBuscar.addEventListener('click',(e)=>{
     document.getElementById('week-edit').value= fechaE;
     document.getElementById('generado-edit').value= uberE;
     document.getElementById('descuento-edit').value= descuentoE;
-   // document.getElementById('concepto1-edit').value= nameE;
+    document.getElementById('renta-auto').value= rentaauto;
     document.getElementById('varios-edit').value= variosE;
-    //document.getElementById('concepto2-edit').value= nameE;
+  
     document.getElementById('status-edit').value= estatusE;
     document.getElementById('pagado-edit').value= pagadoE;
-    document.getElementById('debe-edit').value= debeE;
+    document.getElementById('debe-edit').value= debeE; 
+
+    document.getElementById('totalA-edit').value= montoE ;
   }
 
 // Update objeto de edicion
 function updateE(idE){
-  updateID = db.collection("Pagos").doc(idE);
+  updateID = firestore.collection("Pagos").doc(idE);
   const editdriver= document.getElementById('driver-form');
 
   fechaE = document.getElementById('week-edit').value ;
@@ -291,14 +336,15 @@ function updateE(idE){
   descuentoE = document.getElementById('descuento-edit').value ;
  // document.getElementById('concepto1-edit').value= nameE;
  variosE = document.getElementById('varios-edit').value ;
-  //document.getElementById('concepto2-edit').value= nameE;
+ 
   estatusE = document.getElementById('status-edit').value;
   pagadoE = document.getElementById('pagado-edit').value;
   debeE = document.getElementById('debe-edit').value;
+  montoE = document.getElementById('totalA-edit').value ;
 
 
 // Sumas restas monto a pagar
-let total = parseFloat(monto_generado) + parseFloat(descuentoE) + parseFloat(variosE) ;
+/*let total = parseFloat(monto_generado) + parseFloat(descuentoE) + parseFloat(variosE) ;
 console.log(total);
 let total2= total - rentaauto ;
 roundToTwo(total2)
@@ -306,7 +352,7 @@ console.log(total2 + " monto total a pagar");
 
 function roundToTwo(num) {
   total2= +(Math.round(num + "e+2")  + "e-2");
-}
+} */
   return updateID.update({
     uber_generado: uberE,
     descuento: descuentoE,
@@ -314,7 +360,7 @@ function roundToTwo(num) {
     status: estatusE,
     pagado: pagadoE,
     debe: debeE,
-    monto_a_pagar: total2
+    monto_a_pagar: montoE
 })
 .then(() => {
     console.log("Document successfully updated!"); myModaledit.hide(); editdriver.reset();
@@ -348,6 +394,7 @@ if (confirmar1) {
 //******************************* */
 
   //Generar semanas
+  /*
   let btngenerar = document.getElementById('btn-generar')
   db= firebase.firestore();
   const myModal1 = new bootstrap.Modal(document.getElementById('generarModal'));
@@ -371,6 +418,7 @@ $(fech).append('<span class="badge bg-warning text-dark" id="fecha_modal">'+fech
 
 
 // Pagar a conductores activos
+
 db.collection("Conductor").where("activo", "==", true)
     .get()
     .then((querySnapshot) => {
@@ -429,6 +477,7 @@ db.collection("Conductor").where("activo", "==", true)
 // pago-semanaModal
 
 })
+*/
 
 
 
@@ -443,102 +492,3 @@ db.collection("Conductor").where("activo", "==", true)
 
 
 
-
-
-  btnupdatpay.addEventListener('click',(e)=>{
-
-    // sacar los valores 
-    let cunt = 0;
-    let canxu= 1, canxu2=1; 
-    let idnm,plan1;
-    let idpay,plan2; let montoupdate
-    let ie=0; let montos = [];
-    let descuentosA = [], variosA = [];
-  //let fetchia = document.getElementById('fecha_modal').value;
-  //const div_generador= document.getElementById('generator');
-  e.preventDefault();
-  //const batch2 = db.batch();
-  console.log(contrr);
-  console.log(fetchia);
-
-
- 
-  for(;ie<contrr;){
-console.log(canxu);
-     
-    plan1 = "name" + canxu;
-   
-    canxu++;
-      //console.log(plan1);
-     // idnm= $(div_generador).find(plan1).value;
-  
-     idnm = document.getElementById(plan1).textContent;
- 
-      let idnm2 = idnm+" "+fetchia;
-  
-  console.log(idnm2 + " id");
-
-  plan2 = "monto-uber"+canxu2;
-  plan3 = "descuento-uber" + canxu2;
-  plan4 = "varios-uber" + canxu2;
-
-  plan3 = document.getElementById(plan3).value;
-  plan4 = document.getElementById(plan4).value;
-  descuentosA.push(parseFloat(plan3));
-  variosA.push(parseFloat(plan4));
-
-        idpay = document.getElementById(plan2).value;   console.log(idpay + " paga");
-        montos.push(parseFloat(idpay));
-     canxu2++;
-
-     console.log(montos);
-
-  //Saca lal perra data transaccion //
-     // Create a reference to the SF doc.
-
-  let sfDocRef = db.collection("Pagos").doc(idnm2);
- db.runTransaction((transaction) => {
-
-
-    return transaction.get(sfDocRef).then((sfDoc) => {
-        if (!sfDoc.exists) {
-            throw "Document does not exist!";
-        }
-
-      
-
-         montoupdate = sfDoc.data().monto_a_pagar; console.log(montoupdate);
-        montoupdate= montos[cunt]-montoupdate;  
-        // 
-        console.log(montos[cunt] + " LA paga anadidad");
-        console.log(cunt + " mi contador");
-      
-        transaction.update(sfDocRef, { 
-          monto_a_pagar: montoupdate ,
-          uber_generado: montos[cunt],
-          descuento: descuentosA[cunt],
-          varios: variosA[cunt]
-        
-        } ) 
-       
-        cunt++; 
-        montoupdate=0; 
-    });
-}).then(() => {
-    console.log("Transaction successfully committed!");       
-}).catch((error) => {
-    console.log("Transaction failed: ", error);
-});
-
-
-ie++;   }
-
-/* 
-  batch2.commit().then(() => {
-    alert("Se ha registrado correctamente");
-    console.log(batch2);
-
-    myModal2.hide()
-});  */
-
-})
