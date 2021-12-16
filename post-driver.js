@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    $('#birth-date').mask('00/00/0000');
+   
     $('#phone-number').mask('000-000-0000');
    })
 
@@ -80,7 +80,8 @@ let turno = driverform['hora-driver'].value;
 //let socio = driverform['auto-socio'].value;
 let renta = driverform['renta-auto'].value;
 
-let asdf = autosarray.indexOf(auto);
+let asdf = autosarray.indexOf(auto); 
+console.log(asdf);
 console.log(sociosarray[asdf]);
 
 if(renta<0){

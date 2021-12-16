@@ -109,30 +109,19 @@
                 </div>    
 
 
-                <div class="mb-3 form-group row">
-                    <div class="form-group">
-                        <div class="d-inline-block ">
+                <div class="mb-3">
                             <input type="number" class="form-control marg-der" id="descuento-pago" placeholder="Descuento $">
                         </div>
-    
-                        <div class="d-inline-block marg-izq">
-                            <input type="text" class="form-control marg-der" id="descuento-concepto" placeholder="Concepto">
-                        </div>
-                    </div>
-                </div>
 
       
-                <div class="mb-3 form-group row">
-                    <div class="form-group">
-                        <div class="d-inline-block ">
+                <div class="mb-3 ">
+              
                             <input type="number" class="form-control marg-der" id="varios-pago" placeholder="Varios $">
-                        </div>
-    
-                        <div class="d-inline-block marg-izq">
-                            <input type="text" class="form-control marg-der" id="varios-concepto" placeholder="Concepto">
-                        </div>
-                    </div>
                 </div>
+
+                <div class="mb-3">
+                  <input type="number" class="form-control" id="total-uber" placeholder="Total a Pagar" autofocus>
+              </div>    
 
               <!--
                 <div class="mb-3">
@@ -269,19 +258,27 @@
               <form id="driver-form">
 
                 <div class="mb-3">
-                  <label for="recipient-name" class="col-form-label ">CONDUCTOR: </label>
                   <input type="week" name="week" id="week-edit" class="form-control" required>
                 </div>    
 
                 <div class="row mb-3">
+                  <div class="col-md-4 ml-auto"> <label for="">Renta de Auto: </label> </div>
+                </div>
+
+                <div class="row mb-3">
+                  <div class="col-md-4 ml-auto"> <label for="">Servicio : </label> </div>
+                  <div class="col-md-8 ml-auto"> <select name="servicio" class="form-control" id="infoService1"></select>     </div>
+                </div>
+
+                <div class="row mb-3">
                   <div class="col-md-4 ml-auto"> <label for="">MONTO GENERADO: </label> </div>
-                  <div class="col-md-8 ml-auto">    <input type="number" class="form-control" id="generado-edit" placeholder="Monto Generado $ UBER" autofocus> </div>
+                  <div class="col-md-8 ml-auto">    <input type="number" onchange="setTotal()" class="form-control" id="generado-edit" placeholder="Monto Generado $ UBER" autofocus> </div>
                 </div>
 
 
                 <div class="row mb-3">
                   <div class="col-md-4 ml-auto"> <label for="">DESCUENTO: </label> </div>
-                  <div class="col-md-8 ml-auto">   <input type="number" class="form-control marg-der" id="descuento-edit" placeholder="Descuento $"> </div>
+                  <div class="col-md-8 ml-auto">   <input type="number" onchange="setTotal()" class="form-control marg-der" id="descuento-edit" placeholder="Descuento $"> </div>
                 </div>
 
 
@@ -291,7 +288,7 @@
                     <label for="">VARIOS: </label>
                 </div>
                 <div class="col-md-8 ml-auto">
-                            <input type="number" class="form-control marg-der" id="varios-edit" placeholder="Varios $">
+                            <input type="number" onchange="setTotal()" class="form-control marg-der" id="varios-edit" placeholder="Varios $">
                         </div>
                     </div>
   
@@ -299,15 +296,15 @@
   
 
               <div class="row mb-3">
-                <div class="col-md-4 ml-auto"> <label for="">PAGADO: </label> </div>
-                <div class="col-md-8 ml-auto"> <input type="number" class="form-control" id="pagado-edit" placeholder="Pagado"> </div>
+                <div class="col-md-4 ml-auto fw-bold"> <label for="">PAGADO: </label> </div>
+                <div class="col-md-8 ml-auto fw-bold"> <input type="number" onchange="setTotal2()" class="form-control" id="pagado-edit" placeholder="Pagado"> </div>
               </div>
 
 
            
           <div class="row mb-3">
             <div class="col-md-4 ml-auto"> <label for="">DEBE: </label> </div>
-            <div class="col-md-8 ml-auto">  <input type="number" class="form-control" id="debe-edit" placeholder="Debe"> </div>
+            <div class="col-md-8 ml-auto">  <input type="number" onchange="setTotal()" class="form-control" id="debe-edit" placeholder="Debe"> </div>
           </div>
 <hr>
           <div class="row mb-3">

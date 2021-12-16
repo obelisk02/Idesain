@@ -31,7 +31,7 @@ function getTotal(cont) {
   let total = plan5;
 
   let total1 = 0;
-  total1 = renta + generado + descuento + varios; if(total1>0){plan5.style.backgroundColor = "#42ad36";} ;if(total1<0){plan5.style.backgroundColor = "#e86464";}
+  total1 = (renta + generado - descuento + varios).toFixed(2); if(total1>0){plan5.style.backgroundColor = "#42ad36";} ;if(total1<0){plan5.style.backgroundColor = "#e86464";}
   total.value = 0;
   total.value = total1;
 }
@@ -77,7 +77,7 @@ db.collection("Conductor").where("activo", "==", true).orderBy("auto")
 //**********************************************************************************8 */
 const div_generador2= document.getElementById('infoService1');
    //Muestra los servicios
-firestore.collection("Servicios").onSnapshot((querySnapshot) => { contador2=1;   $(div_generador2).empty();
+firestore.collection("Servicios").where("status", "==", "pendiente").onSnapshot((querySnapshot) => { contador2=1;   $(div_generador2).empty();
        querySnapshot.forEach((doc) => {
           
         
