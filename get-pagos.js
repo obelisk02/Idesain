@@ -231,9 +231,9 @@ btnBuscar.addEventListener('click',(e)=>{
 
               
             <td class="text-center"> <div class="btn-group">
-            <button class="btn btn-sm btn-warning w-50" type="button" 
+            <button class="btn btn-sm bg-success text-white w-50" type="button" 
             onclick="abrirModalEdit('${doc.id}','${doc.data().fecha}','${doc.data().uber_generado}','${doc.data().descuento}','${doc.data().varios}','${doc.data().monto_a_pagar}','${doc.data().status}','${doc.data().pagado}','${doc.data().debe}','${doc.data().renta_auto}','${doc.data().servicio}')">
-              <i class="fa fa-pencil" aria-hidden="true"><i class="far fa-edit"></i></i>
+              <i class="fas fa-dollar-sign" aria-hidden="true"></i>
             </button>
             <button class="btn btn-sm w-50 btn-danger" type="button"  
             onclick="eliminarD('${doc.id}')">
