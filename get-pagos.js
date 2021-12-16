@@ -519,7 +519,4 @@ db.collection("Conductor").where("activo", "==", true)
 
 
 
-  let btnupdatpay = document.getElementById('btn-updatePago');
-
-
 
