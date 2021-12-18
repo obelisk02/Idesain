@@ -1,7 +1,10 @@
 $(document).ready(function () {
 
+  
     });
 
+
+    
        
     const firebaseConfig  = {
             apiKey: "AIzaSyCWVd8mU-V5rLgbVygpvlN9EMBBJQe5nE8",
@@ -13,7 +16,7 @@ $(document).ready(function () {
     };    
  
 
-    sessionStorage.setItem('key', 'value');
+
 
 
 
@@ -23,6 +26,92 @@ $(document).ready(function () {
     const firestore = firebase.firestore()
   const tabladriver= document.getElementById('tabla-main');
 
+
+
+
+  // Scar el dia jueves
+  const d = new Date();
+
+ let month = d.getMonth() + 1;	// Month	[mm]	(1 - 12)
+ let day = d.getDate();		// Day		[dd]	(1 - 31)
+ let year = d.getFullYear();
+let semanadeldia = d.getDay(); 
+
+  let fechacompleta = day +" "+month + " "+year;
+
+  let diahtml= document.getElementById("fecha-hoy");
+  diahtml.textContent=semanadeldia
+
+  
+  console.log(day +"El 4 es jueves");
+  if (semanadeldia == 4){
+
+    var docRef = firestore.collection("CheckerDay").doc(fechacompleta);
+
+    docRef.get().then((doc) => {
+        if (doc.exists) {
+            console.log("Document data:", doc.data());
+        } else {
+            console.log("No existe documento: Crear uno nuevo");
+            let ruta1= firestore.collection("CheckerDay").doc(fechacompleta);
+            ruta1.set({
+                fecha: fechacompleta,
+                dia: semanadeldia,
+                checked: true
+          })
+          .then(() => {
+              
+            // CHECAR LOS PAGOS FALTANTES PARA ESTE JUEVES
+
+           firestore.collection("Pagos").where("status", "==", "pendiente").get()
+    .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+           
+            console.log(doc.id, " => ", doc.data());
+
+            
+            //****************************************************************** */
+            // CREAR LA NOTIFICACION DE NO PAGADO
+             
+    // Subir como notificacion
+    var f = new Date();
+    let hoy = f.getDate() + "-"+ f.getMonth()+ "-" +f.getFullYear();
+ 
+     firestore.collection("Notificaciones").doc(doc.id+" No pago").set({
+       nombre: doc.data().id,
+       semana: doc.data().fecha,
+       debe: doc.data().debe,
+       fecha_creacion: hoy,
+       mensaje: "Alerta: No se ha registrado pago del conductor."
+   })
+   .then(() => {
+       console.log("Document successfully written!");
+   })
+   .catch((error) => {
+       console.error("Error writing document: ", error);
+   });
+   //************************************************************************** */
+   
+        });
+    })
+    .catch((error) => {
+        console.log("Error getting documents: ", error);
+    });
+
+
+          })
+        }
+    }).catch((error) => {  console.log("Error getting document");
+       
+    });
+
+
+
+
+}
+
+
+  //************************************** */
   firestore.collection("Auto").onSnapshot((querySnapshot) => {
     tabladriver.innerHTML = '';
 

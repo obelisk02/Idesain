@@ -3,21 +3,34 @@ window.onload = function() {
  // x = document.getElementById("driver").value;
  
  let data = sessionStorage.getItem('user_pago'); console.log(data);
- if (data !=''){
+
+   //pintar select
+  
+    let selectDriver= document.getElementById('driver'); console.log(data);
+  selectDriver.value= data;
+  
+
+ if (data !=null){
   tablapagos.innerHTML = '';
   let status1, pamp='status-tabla',pamp2;
 
-
+ 
   // Un addon Muestra el conductor viniendo del href Index
  firebase.firestore().collection("Pagos").where("id", "==", data)
     .get()
-    .then((querySnapshot) => {
+    .then((querySnapshot) => {                           let saldoafavor="";
         querySnapshot.forEach((doc) => {
+
+          if (doc.data().monto_a_pagar > 0 ){
+            saldoafavor = "Saldo a Favor";
+          }
             // doc.data() is never undefined for query doc snapshots
             console.log(doc.id, " => ", doc.data());      // FLTA CALCULAR MONTO A PAGAR renta_auto - servicios - generado
 
-           
-     
+            TotalGenerado = TotalGenerado + parseFloat(doc.data().uber_generado); 
+            TotalPagado = TotalPagado + parseFloat(doc.data().pagado); 
+            TotalGanancia =  TotalGanancia + parseFloat(doc.data().monto_a_pagar); 
+            TotalRenta=  TotalRenta + parseFloat(doc.data().renta_auto); 
 
             tablapagos.innerHTML += ` <tr>     
             <th scope="row">${doc.data().fecha}</th>
@@ -30,6 +43,15 @@ window.onload = function() {
             <td class="text-center" > <span  id="status-tabla${cont}">${doc.data().status}</span></td>  
             <td class="text-center" >${doc.data().pagado}</td>  
             <td class="text-center" >${doc.data().debe}</td> 
+
+          
+
+          <td class="text-center"> <div class="btn-group">
+            <button class="btn  btn-dark w-50" type="button" style="width:1vh height: 1vh;"
+            onclick="subirImg('${doc.id}','${doc.data().id}','${doc.data().fecha}','${doc.data().debe}','${doc.data().pagado}','${doc.data().uber_generado}','${doc.data().descuento}','${doc.data().varios}','${doc.data().monto_a_pagar}','${doc.data().status}','${doc.data().renta_auto}')">
+              <i class="fas fa-upload" aria-hidden="true"></i>   ${saldoafavor}
+            </button>
+          </div> </td>
 
             <td class="text-center"> <div class="btn-group">
             <button class="btn btn-sm btn-warning w-50" type="button" 
@@ -70,8 +92,28 @@ window.onload = function() {
             elem.src= "./img/NO-IMG.png"
           }
           
-          cont++;
+          cont++; saldoafavor="";
         });
+
+        
+// TOTALES TD **************************************************************
+
+tablapagos.innerHTML += ` <tr class="bg-tr">     
+<th scope="row">TOTAL</th>
+<td class="text-center fw-bold"> Generado: </td>
+<td class="text-center fw-bold">  <span class="badge bg-primary">${TotalGenerado.toFixed(2)}</span> </td>
+<td class="text-center" > </td>
+<td class="text-center fw-bold"  >Monto: </td>
+<td class="text-center  "> <span class="badge bg-primary">${TotalGanancia.toFixed(2)}</span> </td>  
+<td class="text-center" > Ganancia Total:</td>  
+<td class="text-center" ><span class="badge bg-primary">${TotalPagado.toFixed(2)}</span> </td>  
+<td class="text-center" > </td> 
+<td class="text-center fw-bold" >Total Renta: </td> 
+<td class="text-center" > <span class="badge bg-primary">${TotalRenta.toFixed(2) * -1}</span> </td> 
+</tr>`
+//***************************************************** */
+TotalGenerado= 0 , TotalPagado = 0,  TotalGanancia= 0;  TotalRenta=0;
+
     })
     .catch((error) => {
         console.log("Error getting documents: ", error);
@@ -101,30 +143,16 @@ const firebaseConfig = {
    //Muestra los servicios
 
 
-   firestore.collection("Servicios").get().then((querySnapshot) => {  let contservice = 1;
-    querySnapshot.forEach((doc) => {
-
-        //console.log(doc.id, " => ", doc.data());
-   
-        let x = document.getElementById("infoService1");
-        let option = document.createElement("option");
- 
-        texto1= doc.id ; //data().id  +" " + doc.data().marca + " " + doc.data().modelo +" " + doc.data().anio
-        option.text = texto1
-        x.add(option,x[contservice]);
-       
-
-
-    });
-});
 
     
     
-       
+   let   TotalGenerado= 0 , TotalPagado = 0,  TotalGanancia= 0,  TotalRenta=0;
 
 
 
   const tablapagos= document.getElementById('tabla-pagos');
+
+
   //Saca los conductores
   const items=[];
           let cont=1; let texto1=""; let rentaSemanal ;let x ; let contPerson = 1;
@@ -147,7 +175,26 @@ const firebaseConfig = {
     });
 });
 
-console.log(items)
+
+
+//Mostrar servicios en <SELect EDIT>
+//const div_generador2= document.getElementById('infoService1'); 
+let contador2 = 1;
+   //Muestra los servicios
+firestore.collection("Servicios").where("status", "==", "pendiente").onSnapshot((querySnapshot) => { contador2=1;  
+       querySnapshot.forEach((doc) => {
+          
+      
+
+        let x = document.getElementById('infoService1');
+        let option = document.createElement("option");
+ 
+        texto1= doc.id ; //data().id  +" " + doc.data().marca + " " + doc.data().modelo +" " + doc.data().anio
+        option.text = texto1
+        x.add(option,x[contador2]);
+       })
+      });
+
 
 
 // Agregar pago
@@ -170,7 +217,7 @@ submitBtn.addEventListener('click',(e)=>{
     base= x +" "+ fecha;
     console.log(base)
 
-    db.collection("Pagos").doc(base).set({
+    firestore.collection("Pagos").doc(base).set({
       id: nombre,
       fecha: fecha,
       uber_generado: uber_generado,
@@ -209,13 +256,19 @@ btnBuscar.addEventListener('click',(e)=>{
 //db.collection("Pagos").where("id", "==", x)
  firebase.firestore().collection("Pagos").where("id", "==", x)
     .get()
-    .then((querySnapshot) => {
+    .then((querySnapshot) => {                  let saldoafavor="";
         querySnapshot.forEach((doc) => {
             // doc.data() is never undefined for query doc snapshots
             console.log(doc.id, " => ", doc.data());      // FLTA CALCULAR MONTO A PAGAR renta_auto - servicios - generado
 
-           
-     
+            TotalGenerado = TotalGenerado + parseFloat(doc.data().uber_generado); 
+            TotalPagado = TotalPagado + parseFloat(doc.data().pagado); 
+            TotalGanancia =  TotalGanancia + parseFloat(doc.data().monto_a_pagar); 
+            TotalRenta=  TotalRenta + parseFloat(doc.data().renta_auto); 
+
+            if (doc.data().monto_a_pagar > 0 ){
+              saldoafavor = "Saldo a Favor";
+            }
 
             tablapagos.innerHTML += ` <tr>     
             <th scope="row">${doc.data().fecha}</th>
@@ -230,6 +283,14 @@ btnBuscar.addEventListener('click',(e)=>{
             <td class="text-center fw-bolder text-danger" >${doc.data().debe}</td> 
 
               
+
+            <td class="text-center"> <div class="btn-group">
+            <button class="btn  btn-dark w-50" type="button" style="width:1vh height: 1vh;"
+            onclick="subirImg('${doc.id}','${doc.data().id}','${doc.data().fecha}','${doc.data().debe}','${doc.data().pagado}','${doc.data().uber_generado}','${doc.data().descuento}','${doc.data().varios}','${doc.data().monto_a_pagar}','${doc.data().status}','${doc.data().renta_auto}')">
+              <i class="fas fa-upload" aria-hidden="true"></i>  
+            </button> 
+          </div>  <div class="fw-bold"> ${saldoafavor} </div> </td>
+
             <td class="text-center"> <div class="btn-group">
             <button class="btn btn-sm bg-success text-white w-50" type="button" 
             onclick="abrirModalEdit('${doc.id}','${doc.data().fecha}','${doc.data().uber_generado}','${doc.data().descuento}','${doc.data().varios}','${doc.data().monto_a_pagar}','${doc.data().status}','${doc.data().pagado}','${doc.data().debe}','${doc.data().renta_auto}','${doc.data().servicio}')">
@@ -248,9 +309,7 @@ btnBuscar.addEventListener('click',(e)=>{
 
           pamp2 = pamp+cont;
             status1 = document.getElementById(pamp2);
-           //console.log(status1.textContent);
-          
-          
+
           if (status1.textContent == "pendiente"){
             status1.className += " badge bg-warning text-dark";
           }
@@ -270,24 +329,49 @@ btnBuscar.addEventListener('click',(e)=>{
             elem.src= "./img/NO-IMG.png"
           }
 
-          cont++;
+          cont++; saldoafavor="";
+          
+
         });
+
+
+// TOTALES TD **************************************************************
+
+tablapagos.innerHTML += ` <tr class="bg-tr">     
+<th scope="row">TOTAL</th>
+<td class="text-center fw-bold"> Generado: </td>
+<td class="text-center fw-bold">  <span class="badge bg-primary">${TotalGenerado.toFixed(2)}</span> </td>
+<td class="text-center" > </td>
+<td class="text-center fw-bold"  >Monto: </td>
+<td class="text-center  "> <span class="badge bg-primary">${TotalGanancia.toFixed(2)}</span> </td>  
+<td class="text-center fw-bold" > Pagado:</td>  
+<td class="text-center" ><span class="badge bg-primary">${TotalPagado.toFixed(2)}</span> </td>  
+<td class="text-center" > </td> 
+<td class="text-center fw-bold" >Total Renta: </td> 
+<td class="text-center" > <span class="badge bg-primary">${TotalRenta.toFixed(2) * -1}</span> </td> 
+
+</tr>`
+//***************************************************** */
+TotalGenerado= 0 , TotalPagado = 0,  TotalGanancia= 0;  TotalRenta = 0;
+       
     })
     .catch((error) => {
         console.log("Error getting documents: ", error);
     });
 
+    
+      
   })
 
 
 
  // FRONT PARA CALCULO DE TOTAL A PAGAR SI LLEGA A EDITARSE
  function setTotal() {
-  let Pago_rentaauto = parseFloat( document.getElementById('renta-auto').value );
-  let Pago_generado = parseFloat( document.getElementById('generado-edit').value );
-  let Pago_descuento = parseFloat(document.getElementById('descuento-edit').value );
-  let Pago_varios =   parseFloat( document.getElementById('varios-edit').value );
-  let Pago_pagado =   parseFloat( document.getElementById('pagado-edit').value );
+  let Pago_rentaauto = parseFloat( document.getElementById('renta-auto').value );       console.log(Pago_rentaauto);
+  let Pago_generado = parseFloat( document.getElementById('generado-edit').value );     console.log(Pago_generado);
+  let Pago_descuento = parseFloat(document.getElementById('descuento-edit').value );    console.log(Pago_descuento);
+  let Pago_varios =   parseFloat( document.getElementById('varios-edit').value );       console.log(Pago_varios);
+  let Pago_pagado =   parseFloat( document.getElementById('pagado-edit').value );       console.log(Pago_pagado);
   let Pago_debe =   document.getElementById('debe-edit') ; 
   
   let Pago_total =  document.getElementById('totalA-edit');
@@ -303,14 +387,23 @@ btnBuscar.addEventListener('click',(e)=>{
  }
 
  function setTotal2() {
-  let Pago_rentaauto = parseFloat( document.getElementById('renta-auto').value );
-  let Pago_generado = parseFloat( document.getElementById('generado-edit').value );
-  let Pago_descuento = parseFloat(document.getElementById('descuento-edit').value );
-  let Pago_varios =   parseFloat( document.getElementById('varios-edit').value );
-  let Pago_pagado =   parseFloat( document.getElementById('pagado-edit').value );
+  let Pago_rentaauto = document.getElementById('renta-auto').value;
+  let Pago_generado =  document.getElementById('generado-edit').value;  if(Pago_generado == ""){ Pago_generado = parseFloat( 0)};
+  let Pago_descuento = document.getElementById('descuento-edit').value;  if(Pago_descuento == ""){ Pago_descuento = parseFloat( 0)};
+  let Pago_varios =    document.getElementById('varios-edit').value ;  if(Pago_varios == ""){ Pago_varios = parseFloat( 0)};
+  let Pago_pagado =    document.getElementById('pagado-edit').value ;  if( Pago_pagado == ""){  Pago_pagado = parseFloat( 0)};
   let Pago_debe =   document.getElementById('debe-edit') ; 
   
   let Pago_total =  document.getElementById('totalA-edit');
+
+
+  Pago_rentaauto = parseFloat( Pago_rentaauto);
+  Pago_generado = parseFloat( Pago_generado );
+  Pago_descuento = parseFloat( Pago_descuento );
+  Pago_varios =   parseFloat(Pago_varios);
+  Pago_pagado =   parseFloat( Pago_pagado);
+
+
 
   let totalF = (Pago_rentaauto + Pago_generado - Pago_descuento +Pago_varios + Pago_pagado).toFixed(2);
   
@@ -410,7 +503,7 @@ function eliminarD(id){
 
   let confirmar1 = confirm("Desea eliminar");
 if (confirmar1) {
-  db.collection("Pagos").doc(id).delete().then(() => {
+  firestore.collection("Pagos").doc(id).delete().then(() => {
     console.log("Document successfully deleted!"); 
     
   }).catch((error) => {
@@ -512,11 +605,69 @@ db.collection("Conductor").where("activo", "==", true)
 
 
 
+const sbrImg = new bootstrap.Modal(document.getElementById('subirImage'));  let debeFinal, totalMonto=0, pagadoAnterior=0; 
+function subirImg(idE, quitate, fechaE,){
+  let persona = document.querySelector('#persona');
+  let fecha = document.querySelector('#fecha');
+  persona.innerHTML = quitate;
+  fecha.innerHTML = fechaE;
+  sbrImg.show();
+}
 
-  // GET USERS WHERE FECHA SEA LA QUE PICKE 
-  //PINTAR USERS CON INPUTS
-  //HACER UPDATE DE ESOS IDS
 
 
+let docGlobal="";
+function uploadIMG(){
+   
+  const storageRef = firebase.storage().ref();
+  const file = document.querySelector('#selectedFile').files[0];
+  if (file == null){
+    alert("Elige una imagen")
+  }
+  else{
+    let persona = document.querySelector('#persona').textContent;
+    let fecha = document.querySelector('#fecha').textContent;
+
+    console.log(persona, fecha);
+    let name =  fecha ; //+"___"+ new Date()
+    let name2 = persona + "/"+ name;
+
+    const metadata = {
+        contentType: 'image/jpeg'
+    }
+
+    const task = storageRef.child(name2).put(file,metadata);
+
+    task
+    .then(snapshot => 
+      snapshot.ref.getDownloadURL())
+    .then(url=>{
+      console.log(url);
+      alert("imagen subida"); 
+      const imagenElement = document.querySelector('#ticketImg');
+      imagenElement.src = url;
+
+
+      //update en pagos en url-img
+      eldoc = persona+" "+fecha; console.log(eldoc);
+      docGlobal = eldoc;
+      const washingtonRef = firestore.collection("Pagos").doc(eldoc);
+
+      // Update a Pago
+return washingtonRef.update({
+    img_url: url,
+  
+})
+.then(() => {
+    console.log("Document successfully updated!");
+})
+.catch((error) => {
+    // The document probably doesn't exist.
+    console.error("Error updating document: ", error);
+});
+    });
+ 
+    }
+  }
 
 

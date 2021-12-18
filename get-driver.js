@@ -12,6 +12,39 @@ const firebaseConfig = {
   const db = firebase.firestore();
 
   //const  db =firestore.collection("Conductor")
+
+
+  // SACAR AUTOS PARA SLECT EN EDIT 
+  
+  let cont=1; let texto1="";  let texto2; sociosarray=[],autosarray=[] , turnosChecker=[] ;     
+  // 2 arrays
+
+  let x = document.getElementById("auto-driver");
+  
+db.collection("Auto").get().then((querySnapshot) => {
+querySnapshot.forEach((doc) => {
+// doc.data() is never undefined for query doc snapshots
+// console.log(doc.id, " => ", doc.data());
+
+let option = document.createElement("option");
+texto1= doc.data().id  +" " + doc.data().marca + " " + doc.data().modelo +" " + doc.data().anio
+option.text = texto1
+x.add(option,x[cont]); cont++;
+
+
+  autosarray.push(texto1);
+  sociosarray.push(doc.data().inversion);
+  turnosChecker.push(doc.data().matutino);
+  turnosChecker.push(doc.data().vespertino);
+
+
+
+}); 
+});
+console.log(autosarray);
+console.log(sociosarray);
+console.log(turnosChecker);
+
  
   let updateID="";
   const tabladriver= document.getElementById('tabla-driver');
@@ -29,9 +62,9 @@ const firebaseConfig = {
         <td >${doc.data().auto}</td>
         <td class="text-center">${doc.data().renta_auto}</td>
         <td class="text-center">${doc.data().turno}</td>
-        <td class="text-center">
+        <td class="text-center"> 
         <button class="btn btn-sm btn-success w-50" type="button" onclick=" window.open('//api.whatsapp.com/send?phone=52${doc.data().telefono}','_blank')">
-        <i class="fab fa-whatsapp"></i></button></td>
+        <i class="fab fa-whatsapp">  </i></button> <div> ${doc.data().telefono} </div></td>
           
         <td class="text-center"> <div class="btn-group">
         <button class="btn btn-sm btn-warning w-50" type="button" 
@@ -128,7 +161,46 @@ function update(idE){
     renta_auto: renta
 })
 .then(() => {
-    console.log("Document successfully updated!"); myModal1.hide()
+    console.log("Document successfully updated!"); 
+    
+    let idAuto = auto.substr(0, 5);
+
+   let UpdateTurno=  db.collection("Auto").doc(idAuto);
+   console.log(auto);
+
+   if (turno == "Matutino"){
+    return UpdateTurno.update({
+      matutino: nombre
+  })
+  .then(() => {
+      console.log("Documento se ha actualizado - turno persona");  //driverform.reset(); 
+      myModal1.hide();
+  })
+  .catch((error) => {
+      // The document probably doesn't exist.
+      console.error("Error updating document: ", error);
+  });
+  
+   }
+
+   if (turno == "Vespertino"){
+
+    return UpdateTurno.update({
+      vespertino: nombre
+  })
+  .then(() => {
+      console.log("Documento se ha actualizado - turno persona");  //driverform.reset(); 
+      myModal1.hide();
+  })
+  .catch((error) => {
+      // The document probably doesn't exist.
+      console.error("Error updating document: ", error);
+  });
+  
+   }
+      
+
+ 
 })
 .catch((error) => {
     // The document probably doesn't exist.

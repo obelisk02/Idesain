@@ -56,11 +56,15 @@ firebase.initializeApp(firebaseConfig);
      //console.log(status1.textContent);
     
   
-    if (status1.textContent == "true"){
+    if (status1.textContent == "Activo"){
       status1.className += " badge bg-success";
     }
-    if (status1.textContent == "false"){
+    if (status1.textContent == "Detenido"){
       status1.className += " badge bg-danger";
+    }
+
+    if (status1.textContent == "Reparacion"){
+      status1.className += " badge bg-warning";
     }
 
     cont++;
@@ -149,9 +153,9 @@ function update(idE){
       let placas1 = editdriver['placas-auto'].value;
       let inversion1 = editdriver['inversion-auto'].value;
       let activo1 = editdriver['activo-auto'].value;
-      if (activo1 == "true"){
+     /* if (activo1 == "true"){
         activo1=true
-      } else { activo1=false}
+      } else { activo1=false} */
       
 
   return updateID.update({

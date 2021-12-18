@@ -52,31 +52,20 @@
                   <tr>
                       <th scope="col">Fecha #</th>
                       <th scope="col" class="text-center">Imagen</th>
-                      <th scope="col" class="text-center">Monto Generado</th>
+                      <th scope="col" class="text-center">Generado</th>
                       <th scope="col" class="text-center">Descuentos</th>
                       <th scope="col" class="text-center">Varios</th>
                       <th scope="col" class="text-center">Monto a Pagar</th>
                       <th scope="col" class="text-center">Status</th>
                       <th scope="col" class="text-center">Pagado</th>
                       <th scope="col" class="text-center">Debe</th>
+                      <th scope="col" class="text-center">Subir Image</th>
                       <th scope="col" class="text-center">Acciones</th>
 
                   </tr>
               </thead>
               <tbody id="tabla-pagos">
-                  <tr>
-                      <td>348</td>
-                      <td><a href="#">Joel</a></td>
-                      <td>joel@gmail.com</td>
-                      <td>Lorem Ipsum Lorem Ipsum Lorem Ipsum</td>
-                      <td class="text-center"><span class="badge bg-primary">Primary</span></td>
-                      <td class="text-center">Anand Ramakrishna</td>
-                      <td class="text-center">18-11-2018</td>
-                      <td class="text-center"><span class="sr-only">Close</span><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" id="iry75"
-                                  class="ms-2">
-                                  <path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"></path>
-                              </svg></a></td>
-                  </tr>
+               
               </tbody>
           </table>
       </div>
@@ -248,7 +237,7 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Editar</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Editar / Completar</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
@@ -339,11 +328,47 @@
       </div>
 
 
+      
+      <!-- Modal IMAGEN -->
+<div class="modal fade" id="subirImage" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Pago</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <div class="mb-3">
+          <label for="recipient-name" class="col-form-label">Recibo:</label>
+          <label id="fecha"></label> <br>
+          <label id="persona" class="fw-bold"></label> <br><br>
+
+          
+          <img src="" alt="Ticket" id="ticketImg" width="100%" height="100%">
+          <input type="file" id="selectedFile" style="display: none;" />
+          <input type="button" value="Buscar Imagen " onclick="document.getElementById('selectedFile').click();" class="form-control btn btn-primary" id="recipient-name"/>
+       
+          
+        </div>
+
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="uploadIMG(idE,fechaE)">Subir</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 </body>
 
 
 <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-storage.js"></script>
 <script src="get-pagos.js"></script>
 <script>
     $(function(){

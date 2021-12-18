@@ -58,9 +58,9 @@ db.collection("Conductor").where("activo", "==", true).orderBy("auto")
            $(div_generador).append('   <div class="card"><div class="card-body" > <label id="nameDriver'+contador+'"class="col-form-label fw-bold" style="display: inline-block;">'+doc.id+ '</label> <span class="badge bg-warning text-dark  justify-content-end" style="margin-left: auto; " id="auto'+contador+'">'+ doc.data().auto+'</span>'  +  
            '<div class="row padd-div" style="padding: 2px 2px;"> <div class="col-8 col-sm-6">Renta de Conductor</div>  <div class="col-4 col-sm-6" > <input type="number"  class="form-control" id="renta-driver'+contador+'" value="'+(-1* doc.data().renta_auto)+'" readonly > </div>  </div> ' +
            '<div class="row padd-div" style="padding: 2px 2px;"> <div class="col-8 col-sm-6">Asociar Servicio</div>  <div class="col-4 col-sm-6" > <select name="auto" class="form-control" id="servicio-driver'+contador+'" placeholder="Elige Servicio" >  <option value=""></option> </select> </div>  </div> ' +
-          '<div class="row padd-div" style="padding: 2px 2px;"> <div class="col-8 col-sm-6">Monto Generado</div>  <div class="col-4 col-sm-6" > <input type="number"  class="form-control" id="monto-uber'+contador+'" placeholder="Monto" onchange="getTotal('+contador+')"> </div>  </div> ' +
-          '<div class="row padd-div" style="padding: 2px 2px;"> <div class="col-8 col-sm-6">Descuento</div> <div class="col-4 col-sm-6"> <input type="number" class="form-control" id="descuento-uber'+contador+'" placeholder="Descuento" onchange="getTotal('+contador+')"> </div>  </div>' +
-          '<div class="row padd-div" style="padding: 2px 2px;"> <div class="col-8 col-sm-6">Varios</div> <div class="col-4 col-sm-6"> <input type="number" class="form-control" id="varios-uber'+contador+'" placeholder="Varios" onchange="getTotal('+contador+')" > </div>  </div> <hr>' +
+          '<div class="row padd-div" style="padding: 2px 2px;"> <div class="col-8 col-sm-6">Ganancias Totales</div>  <div class="col-4 col-sm-6" > <input type="number"  class="form-control" id="monto-uber'+contador+'" placeholder="Monto" onchange="getTotal('+contador+')"> </div>  </div> ' +
+          '<div class="row padd-div" style="padding: 2px 2px;"> <div class="col-8 col-sm-6">Pagos</div> <div class="col-4 col-sm-6"> <input type="number" class="form-control" id="descuento-uber'+contador+'" placeholder="Descuento" onchange="getTotal('+contador+')"> </div>  </div>' +
+          '<div class="row padd-div" style="padding: 2px 2px;"> <div class="col-8 col-sm-6">Reembolsos</div> <div class="col-4 col-sm-6"> <input type="number" class="form-control" id="varios-uber'+contador+'" placeholder="Varios" onchange="getTotal('+contador+')" > </div>  </div> <hr>' +
           '<div class="row padd-div" style="padding: 2px 2px;"> <div class="col-8 col-sm-6 fw-bolder">Monto a Pagar</div> <div class="col-4 col-sm-6"> <input type="number" class="form-control fw-bolder" id="monto-pagar'+contador+'" placeholder="Monto a Pagar"  > </div>  </div> </div> </div>  <hr>' );   
 
           console.log("conductores:"+contador);      //<select name="auto" class="form-control" id="auto-driver'+contador+'" placeholder="Elige Servicio" >  </select>
@@ -225,24 +225,27 @@ console.log(canxu);
  plan4 = "varios-uber" + canxu;
  plan5 = "monto-pagar" + canxu;
 
- plan2 = document.getElementById(plan2).value;
- plan3 = document.getElementById(plan3).value;
- plan4 = document.getElementById(plan4).value;
- plan5 = document.getElementById(plan5).value;
+
+  //Saca lal perra data transaccion //
+    // Create a reference to the SF doc.
+    let autoB = 'auto'+canxu;
+    let rentaB = 'renta-driver'+canxu;
+ autoB =  document.getElementById(autoB).textContent;
+ rentaB =  parseFloat(document.getElementById(rentaB).value);
+
+ console.log(autoB);
+ console.log(rentaB);
+
+ plan2 = document.getElementById(plan2).value;  if(plan2 == ""){ plan2 = parseFloat( 0)};
+ plan3 = document.getElementById(plan3).value;  if(plan3 == ""){ plan3 = parseFloat( 0)};
+ plan4 = document.getElementById(plan4).value;  if(plan4 == ""){ plan4 = parseFloat( 0)};
+ plan5 = document.getElementById(plan5).value;  if(plan5 == ""){plan5 = parseFloat(rentaB)};
  descuentosA.push(parseFloat(plan3));
  variosA.push(parseFloat(plan4));
 
        
 
- //Saca lal perra data transaccion //
-    // Create a reference to the SF doc.
-    let autoB = 'auto'+canxu;
-    let rentaB = 'renta-driver'+canxu;
- autoB =  document.getElementById(autoB).textContent;
- rentaB =  document.getElementById(rentaB).value;
 
- console.log(autoB);
- console.log(rentaB);
 
 // Set the value of 'NYC'
 var nycRef = db.collection("Pagos").doc(idnm2);
@@ -268,17 +271,11 @@ batch.set(nycRef, {
   } // Fin else
          
 batch.commit().then(() => {
-  console.log("Se ha subido");  alert("Se ha subido con exito")
+  console.log("Se ha subido");  alert("Se ha subido con exito"); location.reload();
  });
  
 
-/* 
- batch2.commit().then(() => {
-   alert("Se ha registrado correctamente");
-   console.log(batch2);
 
-   myModal2.hide()
-});  */
 
 })
  

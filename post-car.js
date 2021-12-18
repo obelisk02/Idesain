@@ -82,7 +82,7 @@ firebase.initializeApp(firebaseConfig);
 
       db.doc(id).set({
           id: id,
-          activo: true,
+          activo: "Activo",
           marca: marca,
           modelo: modelo,
           anio: anio,

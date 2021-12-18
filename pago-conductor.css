@@ -17,3 +17,9 @@
 .marg-izq {
   margin-left: 1vw;
 }
+
+.bg-tr {
+  background-color: black !important;
+
+  border-top: 2px solid black;
+}
