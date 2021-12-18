@@ -466,6 +466,8 @@ function updateE(idE){
   debeE = document.getElementById('debe-edit').value;
   montoE = document.getElementById('totalA-edit').value ;
 
+  let  servicioFinal = document.getElementById('infoService1').value;
+
 
 // Sumas restas monto a pagar
 /*let total = parseFloat(monto_generado) + parseFloat(descuentoE) + parseFloat(variosE) ;
@@ -484,7 +486,8 @@ function roundToTwo(num) {
     status: estatusE,
     pagado: pagadoE,
     debe: debeE,
-    monto_a_pagar: montoE
+    monto_a_pagar: montoE,
+    servicio: servicioFinal
 })
 .then(() => {
     console.log("Document successfully updated!"); myModaledit.hide(); editdriver.reset();
